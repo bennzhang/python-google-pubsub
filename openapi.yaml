@@ -1,0 +1,161 @@
+swagger: '2.0'
+info:
+  description: The pubsub Service with Google Cloud Endpoints API
+  title: PubSub Service with Endpoints
+  version: 1.0.0
+  contact:
+    email: youremail@yourcompany.com
+# host: '104.199.124.136:8081'
+host: "pubsub-api.endpoints.project-name.cloud.goog"
+consumes:
+  - application/json
+produces:
+  - application/json
+schemes:
+  - http
+paths:
+  /:
+    get:
+      description: Welcome to pubsub Webservice.
+      operationId: welcomeMessage
+      responses:
+        '200':
+          description: Welcome to pubsub Webservice
+      security:
+        - api_key: []
+  '/pubsub/topic/create/{topic_name}':
+    post:
+      tags:
+        - topic
+      description: Create a Topic.
+      operationId: createTopic
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/SuccessMessage'
+      parameters:
+        - description: Topic Name
+          in: path
+          name: topic_name
+          required: true
+          type: string
+      security:
+        - api_key: []
+  '/pubsub/topic/delete/{topic_name}':
+    post:
+      tags:
+        - topic
+      description: Delete a Topic.
+      operationId: deleteTopic
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/SuccessMessage'
+      parameters:
+        - description: Topic Name
+          in: path
+          name: topic_name
+          required: true
+          type: string
+      security:
+        - api_key: []
+  '/pubsub/topic/{topic_name}/createSub/{subscription_name}':
+    post:
+      tags:
+        - topic
+      description: Create a subscriber on a Topic.
+      operationId: createSubscription
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/SuccessMessage'
+      parameters:
+        - description: Topic Name
+          in: path
+          name: topic_name
+          required: true
+          type: string
+        - description: Subscription Name
+          in: path
+          name: subscription_name
+          required: true
+          type: string
+      security:
+        - api_key: []
+  '/pubsub/topic/{topic_name}/deleteSub/{subscription_name}':
+    post:
+      tags:
+        - topic
+      description: Delete a subscriber on a Topic.
+      operationId: deleteSubscription
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/SuccessMessage'
+      parameters:
+        - description: Topic Name
+          in: path
+          name: topic_name
+          required: true
+          type: string
+        - description: Subscription Name
+          in: path
+          name: subscription_name
+          required: true
+          type: string
+      security:
+        - api_key: []
+  '/pubsub/topic/{topic_name}/publish':
+    post:
+      tags:
+        - topic
+      description: Publish message to a topic
+      operationId: publishMessage
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/SuccessMessage'
+      parameters:
+        - description: Topic Name
+          in: path
+          name: topic_name
+          required: true
+          type: string
+        - description: Message to publish
+          in: body
+          name: data
+          required: true
+          schema:
+            $ref: '#/definitions/publishData'
+      security:
+        - api_key: []
+definitions:
+  publishData:
+    properties:
+      data:
+        type: object
+  SuccessMessage:
+    properties:
+      message:
+        type: string
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: key
+    in: query
+
